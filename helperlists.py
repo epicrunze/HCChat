@@ -1,5 +1,5 @@
-mode1 = ["get", "give", "diagnosis", "wrong"]
-mode2 = ["make", "appointment", "meeting", "schedule"]
+mode1 = ["diagnosis", "wrong", "diagnose", "sick", "unwell", "ill"]
+mode2 = ["appointment", "meeting", "schedule"]
 mode3 = ["find", "search", "nearest", "closest"]
 yes = ["yes", "y", "yep", "yeah", "sure"]
 no = ["no", "n", "nope", "nah", "negative"]
