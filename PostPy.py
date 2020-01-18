@@ -23,6 +23,3 @@ def sendPost(auth='e25772d080a0dc1206b421d1d20727e23f321ce3'):
     print(response.text.encode('utf8'))
 
 
-if __name__ == '__main__':
-
-    sendPost()
