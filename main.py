@@ -18,7 +18,7 @@ def root():
 @app.route('/test-post', methods=['GET', 'POST']) #allow both GET and POST requests
 def form_example():
     if request.method == 'POST': #this block is only entered when the form is submitted
-        #httphelper.post("https://enjjibedx31jf.x.pipedream.net/",{},"zoo")
+        httphelper.post("https://enjjibedx31jf.x.pipedream.net/",{},"zoo")
         print("zoo")
 
     return '''<form method="POST">
