@@ -1,6 +1,6 @@
-import datetime
+import httphelper
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
@@ -13,6 +13,19 @@ def root():
                    
 
     return render_template('index.html', time="yee")
+    
+
+@app.route('/test-post', methods=['GET', 'POST']) #allow both GET and POST requests
+def form_example():
+    if request.method == 'POST': #this block is only entered when the form is submitted
+        #httphelper.post("https://enjjibedx31jf.x.pipedream.net/",{},"zoo")
+        print("zoo")
+
+    return '''<form method="POST">
+                  Language: <input type="text" name="language"><br>
+                  Framework: <input type="text" name="framework"><br>
+                  <input type="submit" value="Submit"><br>
+              </form>'''
 
 
 if __name__ == '__main__':
