@@ -5,7 +5,7 @@ import httphelper
 from flask import Flask, render_template, request
 
 # Important values
-WEBHOOK_URL="https://praxis-atrium-265504.appspot.com/webhook"
+WEBHOOK_URL="https://hyper-chat-265522.appspot.com/webhook"
 AUTH_KEY=""
 AUTH_EXPIRY=""
 BOT_ID=""
