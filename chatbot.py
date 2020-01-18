@@ -79,11 +79,11 @@ class Chatbot():
                     return "Would you like to book an appointment with {}?".format(doctorName)
                 elif self.mode == 3:
                     self.process = "checkmode"
-                    return #FIND DOCTOR FUNCTION
+                    return "placeholder menu parse"#FIND DOCTOR FUNCTION
 
         if self.process == "1-symptoms":
             self.process = "checkmode"
-            return #DIAGNOSIS FUNCTION
+            return "placeholder diagnosis"#DIAGNOSIS FUNCTION
         
         if self.process == "2-docappt":
             yes = 0
@@ -96,7 +96,7 @@ class Chatbot():
             if yes > 0 or no > 0:
                 if yes > no:
                     self.process = "2-rectime"
-                    return #calendar function
+                    return "placeholder cal"#calendar function
                 else:
                     self.process = "checkmode"
                     return "Ok, anything else you would like?"
