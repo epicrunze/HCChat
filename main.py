@@ -5,7 +5,7 @@ import httphelper
 from flask import Flask, render_template, request
 
 # Important values
-WEBHOOK_URL="https://hyperchat.appspot.com/webhook"
+WEBHOOK_URL="https://praxis-atrium-265504.appspot.com/webhook"
 AUTH_KEY=""
 AUTH_EXPIRY=""
 BOT_ID=""
@@ -40,4 +40,4 @@ def messageReceived():
 
 if __name__ == '__main__':
     #Debuging locally
-    app.run(port=8080, debug=False)
+    app.run(host='127.0.0.1', port=8080, debug=True)
