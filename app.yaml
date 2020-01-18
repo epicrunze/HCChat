@@ -1,5 +1,8 @@
 runtime: python37
 
+manual_scaling:
+  instances: 1
+
 handlers:
   # This configures Google App Engine to serve the files in the app's static
   # directory.
@@ -11,3 +14,4 @@ handlers:
   # the entire handlers section) when there are no static files defined.
 - url: /.*
   script: auto
+  
