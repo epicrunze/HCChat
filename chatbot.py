@@ -56,7 +56,7 @@ class Chatbot():
             self.mode = None
             self.process = None
 
-        if self.type is None:
+        if self.process is None:
             self.process = "checktype"
             return "Are you a patient or a doctor?"
 
