@@ -1,7 +1,8 @@
-runtime: python37
+runtime: python
+env: flex
 
-manual_scaling:
-  instances: 1
+automatic_scaling:
+  max_num_instances: 1
 
 handlers:
   # This configures Google App Engine to serve the files in the app's static
