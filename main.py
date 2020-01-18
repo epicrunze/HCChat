@@ -1,7 +1,10 @@
+import webhook
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
+
+WEBHOOK_URL="https://praxis-atrium-265504.appspot.com/test-post"
 
 @app.route('/')# Root index for later :)
 def root():
