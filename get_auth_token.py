@@ -10,4 +10,4 @@ body = {'grant_type' : 'password',
 
 response = requests.post(url, data=body, headers=header)
 
-print(response.json()['response']['accessToken'])
+print('accessToken is ' + response.json()['response']['accessToken'])
