@@ -10,5 +10,5 @@ def parsePost(s:str,chatbots:dict,cred:tuple, orgId:int, botId:str):
         return
     if(chatId not in chatbots):
         chatbots[chatId]=chatbot.Chatbot(*cred)
-    response = chatbots[chatId].parseString(msg)+' - '+chatId+' - '+str(id(chatbots[chatId]))
+    response = str(chatbots[chatId].parseString(msg))+' - '+str(chatId)+' - '+str(id(chatbots[chatId]))
     message.sendMessage(chatbots[chatId].accessToken,chatId,orgId,response)
