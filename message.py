@@ -1,7 +1,8 @@
 import httphelper
 
 def sendMessage(auth:str,chatId:str,orgId:int,message:str):
-    
+    if(message==None):
+        return
     url = "https://api-prod.hypercare.com/graphql/private"
     hypercareScope=httphelper.encodeBase64('{"organizationId":'+str(orgId)+'}')
 

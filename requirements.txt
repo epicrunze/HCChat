@@ -1,4 +1,2 @@
-Flask==1.1.1
-Requests
-Base64
-Json
+flask==1.1.1
+requests

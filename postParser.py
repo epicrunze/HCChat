@@ -2,11 +2,13 @@ import json
 import chatbot
 import message
 
-def parsePost(s:str,chatbots:dict,cred:tuple, orgId:int):
+def parsePost(s:str,chatbots:dict,cred:tuple, orgId:int, botId:str):
     jObject=json.loads(s)
     chatId=jObject['message']['chatId']
-    message=jObject['message']['message']
+    msg=jObject['message']['message']
+    if(jObject['message']['userId']==botId):
+        return
     if(chatId not in chatbots):
         chatbots[chatId]=chatbot.Chatbot(*cred)
-    response = chatbots[chatId].parseString(message)
-    messagesendMessage(chatbot.accessToken,chatId,orgId,response)
+    response = chatbots[chatId].parseString(msg)+' - '+chatId+' - '+str(id(chatbots[chatId]))
+    message.sendMessage(chatbots[chatId].accessToken,chatId,orgId,response)

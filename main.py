@@ -1,12 +1,14 @@
 import webhook
 import authentication
 import postParser
+import httphelper
 from flask import Flask, render_template, request
 
 # Important values
 WEBHOOK_URL="https://praxis-atrium-265504.appspot.com/webhook"
 AUTH_KEY=""
 AUTH_EXPIRY=""
+BOT_ID=""
 CHATBOT_DICT={}
 CREDENTIALS=('chatbot','chat@bot','uofthacksteam2','Lu7qXWP3b3d3')
 ORG_ID=71
@@ -19,6 +21,8 @@ AUTH_KEY,AUTH_EXIPRY=authentication.getAuthKey(*CREDENTIALS)
 webhook.removeWebhook(AUTH_KEY)
 # Re-link the web app 
 webhook.addWebhook(WEBHOOK_URL, AUTH_KEY)
+# Obtain BOT_ID
+BOT_ID=authentication.getId(AUTH_KEY,ORG_ID)
 
 @app.route('/')# Root index for later :)
 def root():
@@ -29,7 +33,7 @@ def root():
 def messageReceived():
     if request.method != 'POST':# Something went terribly wrong
         raise RuntimeError('A non-POST request was revieved by this function')
-    postParser.parsePost(request.data,CHATBOT_DICT,CREDENTIALS,ORG_ID)
+    postParser.parsePost(request.data,CHATBOT_DICT,CREDENTIALS,ORG_ID,BOT_ID)
     return 'OK.'
     
 
