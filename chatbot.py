@@ -154,7 +154,7 @@ def parseString(chatId, string):
                 choice = i+1
                 break
         if choice:
-            get_schedule.setUnavail(data["accessToken"], data["defaultDoc"][1], eval(data["docAvail"])[int(choice)-1])
+            get_schedule.setUnavail(data["accessToken"], eval(data["defaultDoc"])[1], eval(data["docAvail"])[int(choice)-1])
             data["process"] = "checkmode"
             firebasehelper.writeDict(data, chatId)
             return "Your appointment is booked!"
@@ -169,7 +169,7 @@ def findPerson(chatId, string):
     if identity[0] == "user":
         idList = [data["userId"], data["id"], identity[1]]
         writeString = "We have brought you two together to chat"
-        fetchUtils.newChat(idList, writeString, data["accessToken"], data["hypercareScope"], data["orgId"])
+        fetchUtils.newChat(idList, writeString, data["accessToken"], data["hypercareScope"], int(data["orgId"]))
         firebasehelper.writeDict(data, chatId)
         return True
     firebasehelper.writeDict(data, chatId)
