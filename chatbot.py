@@ -22,6 +22,7 @@ def initialize(chatId, username, password, clientId, clientSecret, userId):
                             "chatId": str(chatId),
                             "defaultDoc": "None",
                             "docAvail": "None"
+                            "orgId": orgId
                             }
                         }
     return firebasehelper.writeData(data)
