@@ -154,7 +154,7 @@ def parseString(chatId, string):
                 choice = i+1
                 break
         if choice:
-            get_schedule.setUnavail(data["accessToken"], eval(data["defaultDoc"])[1], eval(data["docAvail"])[int(choice)-1])
+            get_schedule.setUnavail(data["accessToken"], data["defaultDoc"]["1"], eval(data["docAvail"])[int(choice)-1])
             data["process"] = "checkmode"
             firebasehelper.writeDict(data, chatId)
             return "Your appointment is booked!"
