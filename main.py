@@ -9,7 +9,6 @@ WEBHOOK_URL="https://hyper-chat-265522.appspot.com/webhook"
 AUTH_KEY=""
 AUTH_EXPIRY=""
 BOT_ID=""
-CHATBOT_DICT={}
 CREDENTIALS=('chatbot','chat@bot','uofthacksteam2','Lu7qXWP3b3d3')
 ORG_ID=71
 
@@ -33,7 +32,7 @@ def root():
 def messageReceived():
     if request.method != 'POST':# Something went terribly wrong
         raise RuntimeError('A non-POST request was revieved by this function')
-    postparser.parsePost(request.data,CHATBOT_DICT,CREDENTIALS,ORG_ID,BOT_ID)
+    postparser.parsePost(request.data,ORG_ID,BOT_ID)
     return 'OK.'
     
 
