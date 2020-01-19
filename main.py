@@ -1,11 +1,11 @@
 import webhook
 import authentication
-import postParser
+import postparser
 import httphelper
 from flask import Flask, render_template, request
 
 # Important values
-WEBHOOK_URL="https://praxis-atrium-265504.appspot.com/webhook"
+WEBHOOK_URL="https://hyper-chat-265522.appspot.com/webhook"
 AUTH_KEY=""
 AUTH_EXPIRY=""
 BOT_ID=""
@@ -33,7 +33,7 @@ def root():
 def messageReceived():
     if request.method != 'POST':# Something went terribly wrong
         raise RuntimeError('A non-POST request was revieved by this function')
-    postParser.parsePost(request.data,CHATBOT_DICT,CREDENTIALS,ORG_ID,BOT_ID)
+    postparser.parsePost(request.data,CHATBOT_DICT,CREDENTIALS,ORG_ID,BOT_ID)
     return 'OK.'
     
 
