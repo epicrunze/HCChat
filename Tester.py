@@ -1,7 +1,7 @@
 import authentication
-username = "chatbot"
-password = "chat@bot"
+username = "ryanzhang"
+password = "pass@word"
 clientId = "uofthacksteam2"
 clientSecret = "Lu7qXWP3b3d3"
 
-print(authentication.getAuthKey(username, password, clientId, clientSecret))
+print(authentication.getId(authentication.getAuthKey(username, password, clientId, clientSecret)[0], orgId=71))

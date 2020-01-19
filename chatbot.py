@@ -2,6 +2,9 @@ import base64
 import helperlists
 import httphelper
 import authentication
+import fetchUtils
+import datetime
+
 class Chatbot():
     def __init__(self, username, password, chatId, orgId):
         clientId = "uofthacksteam2"
@@ -108,4 +111,6 @@ class Chatbot():
             self.process = "checkmode"
             return "Your appointment is booked!"
         
+    def findPerson(self, string):
+        return
 
