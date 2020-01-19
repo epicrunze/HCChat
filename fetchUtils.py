@@ -64,9 +64,9 @@ def fetchName(string):
     topUser = process.extractOne(string, list(user2id.keys()))
 
     if topUser[1] > topDept[1]:
-        return ("user", user2id[topUser[0]])
+        return ("user", user2id[topUser[0]], topUser[0])
     else:
-        return ("dept", dept2id[topUser[0]])
+        return ("dept", dept2id[topdept[0]], topDept[0])
 
 if __name__ == "__main__":
     userIds = ["57bdf0d7-88bd-47c1-9b20-5a71a959c6bf", "23a58200-58c0-49a4-b359-e40f0a47d4f7", "a1496581-3e34-4aab-bf9d-1b3af586d052"]

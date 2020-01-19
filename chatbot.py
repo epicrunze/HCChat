@@ -96,7 +96,7 @@ def parseString(chatId, string):
                 if nameTup[0] == "user":
                     data["process"] = "2-docappt"
                     data["defaultDoc"] = list(nameTup)
-                    doctorName = nameTup[1]
+                    doctorName = nameTup[2]
                     firebasehelper.writeDict(data, chatId)
                     return "Would you like to book an appointment with {}?".format(doctorName)
                 else:
