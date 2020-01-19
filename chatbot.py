@@ -5,6 +5,7 @@ import fetchUtils
 import datetime
 import message
 import firebasehelper
+import get_schedule
 
 
 def initialize(chatId, username, password, clientId, clientSecret, userId):
@@ -19,6 +20,7 @@ def initialize(chatId, username, password, clientId, clientSecret, userId):
                             "id": identity,
                             "userId": str(userId),
                             "chatId": str(chatId)
+                            "defaultDoc" : "None"
                             }
                         }
     return firebasehelper.writeData(data)
@@ -120,6 +122,7 @@ def parseString(chatId, string):
         if yes > 0 or no > 0:
             if yes > no:
                 data["process"] = "2-rectime"
+                get_schedule.availability()
                 firebasehelper.writeDict(data, chatId)
                 return "placeholder cal"#calendar function
             else:
