@@ -6,6 +6,7 @@ import datetime
 import message
 import firebasehelper
 import get_schedule
+import processSymptoms
 
 
 def initialize(chatId, username, password, clientId, clientSecret, userId):
@@ -90,7 +91,7 @@ def parseString(chatId, string):
             if data["mode"] == 1:
                 data["process"] = "1-symptoms"
                 firebasehelper.writeDict(data, chatId)
-                return "Please list your symptoms"
+                return "Please List Your Symptoms in One Message"
             elif data["mode"] == 2:
                 nameTup = fetchUtils.fetchName(string)
                 if nameTup[0] == "user":
@@ -106,10 +107,12 @@ def parseString(chatId, string):
                 data["process"] = "checkmode"
                 firebasehelper.writeDict(data, chatId)
                 return "placeholder menu parse"#FIND DOCTOR FUNCTION
+
     if data["process"] == "1-symptoms":
-        data["process"] = "checkmode"
-        firebasehelper.writeDict(data, chatId)
-        return "placeholder diagnosis"#DIAGNOSIS FUNCTION
+        parts=breakString(string)
+        newInput = processSymptoms.symRev.restrictWords(parts)
+        diag=processSymptoms.symRev.trackDiagnosis(newInput,'male',1999)
+        return "You have: "+diag['Issue']['Name']+' ('+diag['Issue']['ProfName']+')'
 
     if data["process"] == "2-docappt":
         yes = 0
@@ -124,8 +127,6 @@ def parseString(chatId, string):
                 data["process"] = "2-rectime"
                 availList = get_schedule.availability(data["defaultDoc"][1])
                 data["docAvail"] = str(availList)
-                print(data)
-                print(firebasehelper.writeDict(data, chatId))
                 outputString = ""
                 for num, time in enumerate(availList):
                     time -= datetime.timedelta(hours=5)
@@ -168,4 +169,20 @@ def findPerson(chatId, string):
     firebasehelper.writeDict(data, chatId)
     return False
 
+def breakString(string):
+    output = []
+    for each in helperlists.sep:
+        string = string.replace(each, ":")
+    string = string.split(":")
+    for each in string:
+        output.append(each.strip())
+    return output
+
+if __name__ == "__main__":
+    chatId = "1"
+    initialize("1", "chatbot", "chat@bot", "uofthacksteam2", "Lu7qXWP3b3d3", "23a58200-58c0-49a4-b359-e40f0a47d4f7")
+    print(parseString(chatId, "Can i has"))
+    print(parseString(chatId, "patient"))
+    print(parseString(chatId, "i'm sick"))
+    print(parseString(chatId, "cold feeling and abdominal pain,ear ache, back pain, my head hurts#"))
 

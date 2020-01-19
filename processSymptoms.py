@@ -3,8 +3,7 @@ from ELMoForManyLangs.elmoformanylangs import Embedder
 import numpy as np
 from testAPI import getSymptoms, getDiagnosis
 
-token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImphbWVzLmxpYW5neXlAZ21haWwuY29tIiwicm9sZSI6IlVzZXIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiI2MzE3IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy92ZXJzaW9uIjoiMjAwIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9saW1pdCI6Ijk5OTk5OTk5OSIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbWVtYmVyc2hpcCI6IlByZW1pdW0iLCJodHRwOi8vZXhhbXBsZS5vcmcvY2xhaW1zL2xhbmd1YWdlIjoiZW4tZ2IiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL2V4cGlyYXRpb24iOiIyMDk5LTEyLTMxIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9tZW1iZXJzaGlwc3RhcnQiOiIyMDIwLTAxLTE4IiwiaXNzIjoiaHR0cHM6Ly9zYW5kYm94LWF1dGhzZXJ2aWNlLnByaWFpZC5jaCIsImF1ZCI6Imh0dHBzOi8vaGVhbHRoc2VydmljZS5wcmlhaWQuY2giLCJleHAiOjE1Nzk0MDk0MzQsIm5iZiI6MTU3OTQwMjIzNH0.ZX1vXuBVCjDOCCc8lulVMdN5Pj9KkyLYNhwm2KZQ_Lg'
-symRev = SymptomRevision(token)
+
 
 def softmax(x):
     num = np.exp(x-np.max(x))
@@ -13,8 +12,6 @@ def softmax(x):
 
 
 def reverseKey(cDict, value):
-    if value in cDict.values():
-        print("Win")
     for k in cDict.keys():
         if cDict[k] == value:
             return k
@@ -26,18 +23,14 @@ class SymptomRevision:
     def __init__(self, token):
         self.token = token
         self.spell = SpellChecker()
-        self.wordEmbed = Embedder('../ELMoForManyLangs/144')
+        self.wordEmbed = Embedder('./ELMoForManyLangs/144')
         self.symDict = getSymptoms(token)
         self.valid_sym = list(self.symDict.values())
-
-        print("Validate usable symptoms: {}".format(self.valid_sym))
 
         self.embeddingDict = {}
         for sym in self.valid_sym:
             fixedRep = self.wordEmbed.sents2elmo(sym)
             self.embeddingDict[sym] = fixedRep[0]
-
-        print("Sample Word")
 
     def restrictWords(self, inputList):
 
@@ -115,20 +108,9 @@ class SymptomRevision:
             if len(currentDiag) <= 1:
                 #  Early return if combination of symptoms leads to failed
                 #  diagnosis
-                print("Early Diagnosis! Inconclusive.")
                 return lastDiag
 
         return currentDiag
 
-
-if __name__ == '__main__':
-
-    token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImphbWVzLmxpYW5neXlAZ21haWwuY29tIiwicm9sZSI6IlVzZXIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiI2MzE3IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy92ZXJzaW9uIjoiMjAwIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9saW1pdCI6Ijk5OTk5OTk5OSIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbWVtYmVyc2hpcCI6IlByZW1pdW0iLCJodHRwOi8vZXhhbXBsZS5vcmcvY2xhaW1zL2xhbmd1YWdlIjoiZW4tZ2IiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL2V4cGlyYXRpb24iOiIyMDk5LTEyLTMxIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9tZW1iZXJzaGlwc3RhcnQiOiIyMDIwLTAxLTE4IiwiaXNzIjoiaHR0cHM6Ly9zYW5kYm94LWF1dGhzZXJ2aWNlLnByaWFpZC5jaCIsImF1ZCI6Imh0dHBzOi8vaGVhbHRoc2VydmljZS5wcmlhaWQuY2giLCJleHAiOjE1Nzk0MDk0MzQsIm5iZiI6MTU3OTQwMjIzNH0.ZX1vXuBVCjDOCCc8lulVMdN5Pj9KkyLYNhwm2KZQ_Lg'
-    symRev = SymptomRevision(token)
-
-    wordsofInterest = ['Ear Ache', 'Back Pain', 'My Head Hurts',
-                       'Cold Feeling', 'Abdominal Pain']
-    newInput = symRev.restrictWords(wordsofInterest)
-    diag = symRev.trackDiagnosis(newInput, 'male', 1999)
-
-    print(diag)
+token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImphbWVzLmxpYW5neXlAZ21haWwuY29tIiwicm9sZSI6IlVzZXIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9zaWQiOiI2MzE3IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy92ZXJzaW9uIjoiMjAwIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9saW1pdCI6Ijk5OTk5OTk5OSIsImh0dHA6Ly9leGFtcGxlLm9yZy9jbGFpbXMvbWVtYmVyc2hpcCI6IlByZW1pdW0iLCJodHRwOi8vZXhhbXBsZS5vcmcvY2xhaW1zL2xhbmd1YWdlIjoiZW4tZ2IiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL2V4cGlyYXRpb24iOiIyMDk5LTEyLTMxIiwiaHR0cDovL2V4YW1wbGUub3JnL2NsYWltcy9tZW1iZXJzaGlwc3RhcnQiOiIyMDIwLTAxLTE4IiwiaXNzIjoiaHR0cHM6Ly9zYW5kYm94LWF1dGhzZXJ2aWNlLnByaWFpZC5jaCIsImF1ZCI6Imh0dHBzOi8vaGVhbHRoc2VydmljZS5wcmlhaWQuY2giLCJleHAiOjE1Nzk0MzQwMjEsIm5iZiI6MTU3OTQyNjgyMX0.Lx7gNkA3EqD5-hi4_kX_k1tC1wM19MMYajMjOcBzrzI'
+symRev = SymptomRevision(token)
