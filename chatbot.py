@@ -136,8 +136,8 @@ def parseString(chatId, string):
                 outputString = ""
                 for num, time in enumerate(availList):
                     time -= datetime.timedelta(hours=5)
-                    outputString += str(num+1) + ") " + time.strftime("%c") + " "
-                string = "Here are some available appointment times: {}".format(outputString)
+                    outputString += str(num+1) + ") " + time.strftime("%c") + "\\n"
+                string = "Here are some available appointment times:\\n{}".format(outputString)
                 return string
             else:
                 data["process"] = "checkmode"
@@ -153,7 +153,7 @@ def parseString(chatId, string):
             if str(i+1) in string:
                 choice = i+1
                 break
-        if choice:
+        if choice > 0:
             get_schedule.setUnavail(data["accessToken"], data["defaultDoc"]["1"], eval(data["docAvail"])[int(choice)-1])
             data["process"] = "checkmode"
             firebasehelper.writeDict(data, chatId)
