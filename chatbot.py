@@ -1,13 +1,17 @@
 import base64
 import helperlists
-import httphelper
 import authentication
+import fetchUtils
+import datetime
+import message
+
 class Chatbot():
-    def __init__(self, username, password, chatId, orgId):
-        clientId = "uofthacksteam2"
-        clientSecret = "Lu7qXWP3b3d3"
-        self.hypercareScope = httphelper.encodeBase64("organizationId:" + str(orgId))
+    def __init__(self, username, password, clientId, clientSecret, chatId, userId):
+        self.hypercareScope = "eyJvcmdhbml6YXRpb25JZCI6NzEsInN0YXR1cyI6ImFkbWluIn0K"
         self.accessToken = authentication.getAuthKey(username, password, clientId, clientSecret)[0]
+        self.orgId = 71
+        self.id = authentication.getId(self.accessToken, self.orgId)
+        self.userId = userId
         self.chatId = chatId
         self.type = None
         self.mode = None
@@ -63,7 +67,7 @@ class Chatbot():
         if self.process == "checktype":
             if self.patOrDoc(string):
                 self.process = "checkmode"
-                return "Thanks for your response {}".format(self.type)
+                return "Thanks for your response {}".format(self.type).capitalize()
             else:
                 return "Please try again"
 
@@ -108,4 +112,14 @@ class Chatbot():
             self.process = "checkmode"
             return "Your appointment is booked!"
         
+    def findPerson(self, string):
+        identity = fetchUtils.fetchName(string)
+        if identity[0] == "user":
+            idList = [self.userId, self.id, identity[1]]
+            writeString = "We have brought you two together to chat"
+            fetchUtils.newChat(idList, writeString, self.accessToken, self.hypercareScope, self.orgId)
+            return True
+        return False
+
+
 
