@@ -1,7 +1,0 @@
-README.md
-setup.py
-elmoformanylangs.egg-info/PKG-INFO
-elmoformanylangs.egg-info/SOURCES.txt
-elmoformanylangs.egg-info/dependency_links.txt
-elmoformanylangs.egg-info/requires.txt
-elmoformanylangs.egg-info/top_level.txt
