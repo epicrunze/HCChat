@@ -19,8 +19,9 @@ def initialize(chatId, username, password, clientId, clientSecret, userId):
                             "accessToken": accessToken,
                             "id": identity,
                             "userId": str(userId),
-                            "chatId": str(chatId)
-                            "defaultDoc" : "None"
+                            "chatId": str(chatId),
+                            "defaultDoc": "None",
+                            "docAvail": "None"
                             }
                         }
     return firebasehelper.writeData(data)
@@ -91,11 +92,11 @@ def parseString(chatId, string):
                 firebasehelper.writeDict(data, chatId)
                 return "Please list your symptoms"
             elif data["mode"] == 2:
-                #extract doctor's name
                 nameTup = fetchUtils.fetchName(string)
                 if nameTup[0] == "user":
                     data["process"] = "2-docappt"
-                    doctorName = nameTup[1]
+                    data["defaultDoc"] = list(nameTup)
+                    doctorName = nameTup[2]
                     firebasehelper.writeDict(data, chatId)
                     return "Would you like to book an appointment with {}?".format(doctorName)
                 else:
@@ -105,12 +106,11 @@ def parseString(chatId, string):
                 data["process"] = "checkmode"
                 firebasehelper.writeDict(data, chatId)
                 return "placeholder menu parse"#FIND DOCTOR FUNCTION
-
     if data["process"] == "1-symptoms":
         data["process"] = "checkmode"
         firebasehelper.writeDict(data, chatId)
         return "placeholder diagnosis"#DIAGNOSIS FUNCTION
-    
+
     if data["process"] == "2-docappt":
         yes = 0
         no = 0
@@ -122,9 +122,16 @@ def parseString(chatId, string):
         if yes > 0 or no > 0:
             if yes > no:
                 data["process"] = "2-rectime"
-                get_schedule.availability()
-                firebasehelper.writeDict(data, chatId)
-                return "placeholder cal"#calendar function
+                availList = get_schedule.availability(data["defaultDoc"][1])
+                data["docAvail"] = str(availList)
+                print(data)
+                print(firebasehelper.writeDict(data, chatId))
+                outputString = ""
+                for num, time in enumerate(availList):
+                    time -= datetime.timedelta(hours=5)
+                    outputString += str(num+1) + ") " + time.strftime("%c") + "\n"
+                string = "Here are some available appointment times:\n{}".format(outputString)
+                return string
             else:
                 data["process"] = "checkmode"
                 firebasehelper.writeDict(data, chatId)
@@ -134,10 +141,20 @@ def parseString(chatId, string):
             return "Please say yes or no"
     
     if data["process"] == "2-rectime":
-        #string.lower().split()[0]
-        data["process"] = "checkmode"
-        firebasehelper.writeDict(data, chatId)
-        return "Your appointment is booked!"
+        choice = ''
+        for i in range(5):
+            if str(i+1) in string:
+                choice = i+1
+                break
+        if choice:
+            get_schedule.setUnavail(data["accessToken"], data["defaultDoc"][1], eval(data["docAvail"])[int(choice)-1])
+            data["process"] = "checkmode"
+            firebasehelper.writeDict(data, chatId)
+            return "Your appointment is booked!"
+        else:
+            data["process"] = "checkmode"
+            firebasehelper.writeDict(data, chatId)
+            return "Try again"
     
 def findPerson(chatId, string):
     data = firebasehelper.getDict(chatId)
@@ -152,9 +169,3 @@ def findPerson(chatId, string):
     return False
 
 
-if __name__ == "__main__":
-    chatId = "1"
-    initialize("1", "chatbot", "chat@bot", "uofthacksteam2", "Lu7qXWP3b3d3", "23a58200-58c0-49a4-b359-e40f0a47d4f7")
-    print(parseString(chatId, "Can i has"))
-    print(parseString(chatId, "patient"))
-    print(parseString(chatId, "i'm sick"))
