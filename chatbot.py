@@ -129,7 +129,7 @@ def parseString(chatId, string):
         if yes > 0 or no > 0:
             if yes > no:
                 data["process"] = "2-rectime"
-                availList = get_schedule.availability(data["defaultDoc"][1])
+                availList = get_schedule.availability(data["accessToken"],data["defaultDoc"][1])
                 data["docAvail"] = str(availList)
                 print(data)
                 print(firebasehelper.writeDict(data, chatId))
@@ -175,4 +175,11 @@ def findPerson(chatId, string):
     firebasehelper.writeDict(data, chatId)
     return False
 
-
+if __name__ == "__main__":
+    chatId = "1"
+    initialize("1", "chatbot", "chat@bot", "uofthacksteam2", "Lu7qXWP3b3d3", "23a58200-58c0-49a4-b359-e40f0a47d4f7")
+    print(parseString(chatId, "Can i has"))
+    print(parseString(chatId, "patient"))
+    print(parseString(chatId, "book appointment with ryan"))
+    print(parseString(chatId, "yes"))
+    #print(parseString(chatId, "1"))

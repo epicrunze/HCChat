@@ -63,10 +63,8 @@ def setUnavail(auth:str, userId:str, start:datetime):
     'Authorization':'Bearer '+auth
     }
 
-    response = httphelper.post(url, headers, payload)
 
-
-def availability(userId:str):
+def availability(auth:str,userId:str):
     avail = []
     date = datetime.datetime.now()
     date += datetime.timedelta(days=1)
@@ -74,7 +72,7 @@ def availability(userId:str):
     end_date = date + datetime.timedelta(hours=1)
     while len(avail) < 5:
         if date.hour <= 22:
-            if getCalendars("36d69d6507f3e05fc98169fcc698305e1793dc60",date, end_date, userId):
+            if getCalendars(auth,date, end_date, userId):
                 avail.append(date)
             date += datetime.timedelta(hours=1)
             end_date += datetime.timedelta(hours=1)
