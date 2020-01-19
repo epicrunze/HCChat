@@ -7,7 +7,7 @@ import message
 import firebasehelper
 
 
-def initalize(chatId, username, password, clientId, clientSecret, userId):
+def initialize(chatId, username, password, clientId, clientSecret, userId):
     accessToken = authentication.getAuthKey(username, password, clientId, clientSecret)[0]
     orgId = 71
     identity = authentication.getId(accessToken, orgId)
@@ -151,7 +151,7 @@ def findPerson(chatId, string):
 
 if __name__ == "__main__":
     chatId = "1"
-    initalize("1", "chatbot", "chat@bot", "uofthacksteam2", "Lu7qXWP3b3d3", "23a58200-58c0-49a4-b359-e40f0a47d4f7")
+    initialize("1", "chatbot", "chat@bot", "uofthacksteam2", "Lu7qXWP3b3d3", "23a58200-58c0-49a4-b359-e40f0a47d4f7")
     print(parseString(chatId, "Can i has"))
     print(parseString(chatId, "patient"))
     print(parseString(chatId, "i'm sick"))
