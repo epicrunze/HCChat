@@ -9,6 +9,7 @@ def parsePost(s:str,chatbots:dict,cred:tuple, orgId:int, botId:str):
     if(jObject['message']['userId']==botId):
         return
     if(chatId not in chatbots):
+        cred += tuple(chatId) + tuple(jObject['message']['userId'])
         chatbots[chatId]=chatbot.Chatbot(*cred)
     response = chatbots[chatId].parseString(msg)
     message.sendMessage(chatbots[chatId].accessToken,chatId,orgId,response)
