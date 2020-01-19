@@ -1,7 +1,6 @@
 import authentication
 import requests
 import json
-import numpy as np
 from fuzzywuzzy import process
 import message
 
