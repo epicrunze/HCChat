@@ -1,6 +1,6 @@
 import webhook
 import authentication
-import postParser
+import postparser
 import httphelper
 from flask import Flask, render_template, request
 
@@ -33,7 +33,7 @@ def root():
 def messageReceived():
     if request.method != 'POST':# Something went terribly wrong
         raise RuntimeError('A non-POST request was revieved by this function')
-    postParser.parsePost(request.data,CHATBOT_DICT,CREDENTIALS,ORG_ID,BOT_ID)
+    postparser.parsePost(request.data,CHATBOT_DICT,CREDENTIALS,ORG_ID,BOT_ID)
     return 'OK.'
     
 
