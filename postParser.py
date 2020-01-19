@@ -14,6 +14,7 @@ def parsePost(s:str,chatbots:dict,cred:tuple, orgId:int, botId:str)->None:
         if(firebasehelper.hasChatId(chatId)):
             httphelper.post('localhost/webhook',{},s)
         else:
+            cred += tuple(chatId) + tuple(jObject['message']['userId'])
             chatbots[chatId]=chatbot.Chatbot(*cred)
             firebaseHelper.writeData(chatId)
     response = chatbots[chatId].parseString(msg)
