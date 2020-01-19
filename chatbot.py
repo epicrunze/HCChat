@@ -21,7 +21,7 @@ def initialize(chatId, username, password, clientId, clientSecret, userId):
                             "userId": str(userId),
                             "chatId": str(chatId),
                             "defaultDoc": "None",
-                            "docAvail": "None"
+                            "docAvail": "None",
                             "orgId": orgId
                             }
                         }
