@@ -1,5 +1,5 @@
 from spellchecker import SpellChecker
-from HCChat.ELMoForManyLangs.elmoformanylangs import Embedder
+from ELMoForManyLangs.elmoformanylangs import Embedder
 import numpy as np
 from testAPI import getSymptoms, getDiagnosis
 
