@@ -136,8 +136,8 @@ def parseString(chatId, string):
                 outputString = ""
                 for num, time in enumerate(availList):
                     time -= datetime.timedelta(hours=5)
-                    outputString += str(num+1) + ") " + time.strftime("%c") + "\n"
-                string = "Here are some available appointment times:\n{}".format(outputString)
+                    outputString += str(num+1) + ") " + time.strftime("%c") + " "
+                string = "Here are some available appointment times: {}".format(outputString)
                 return string
             else:
                 data["process"] = "checkmode"
@@ -178,7 +178,7 @@ def findPerson(chatId, string):
 if __name__ == "__main__":
     chatId = "1"
     initialize("1", "chatbot", "chat@bot", "uofthacksteam2", "Lu7qXWP3b3d3", "23a58200-58c0-49a4-b359-e40f0a47d4f7")
-    print(parseString(chatId, "Can i has"))
+    print(parseString(chatId, "Hello"))
     print(parseString(chatId, "patient"))
     print(parseString(chatId, "book appointment with ryan"))
     print(parseString(chatId, "yes"))

@@ -38,7 +38,6 @@ def newChat(userIds, string, accessToken, hypercareScope, orgId):
                 }
 
     response = requests.request("POST", url, headers=headers, data = payload)
-    print(json.loads(response.text))
     chatId = json.loads(response.text)['data']['createChat']['id']
 
 
