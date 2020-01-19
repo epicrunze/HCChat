@@ -167,7 +167,7 @@ def findPerson(chatId, string):
     data = firebasehelper.getDict(chatId)
     identity = fetchUtils.fetchName(string)
     if identity[0] == "user":
-        idList = [data["userId"], data["id"], identity[1]]
+        idList = [data["userId"], identity[1]]
         writeString = "We have brought you two together to chat"
         fetchUtils.newChat(idList, writeString, data["accessToken"], data["hypercareScope"], int(data["orgId"]))
         firebasehelper.writeDict(data, chatId)
