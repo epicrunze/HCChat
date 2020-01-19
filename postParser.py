@@ -10,11 +10,8 @@ def parsePost(s:str,chatbots:dict,cred:tuple, orgId:int, botId:str)->None:
     msg=jObject['message']['message']
     if(jObject['message']['userId']==botId):
         return
-    if(chatId not in chatbots):
-        if(firebasehelper.hasChatId(chatId)):
-            httphelper.post('localhost/webhook',{},s)
-        else:
-            chatbots[chatId]=chatbot.Chatbot(*cred)
-            firebaseHelper.writeData(chatId)
-    response = chatbots[chatId].parseString(msg)
-    message.sendMessage(chatbots[chatId].accessToken,chatId,orgId,response)
+    if(firebasehelper.getData(chatId)=='null'):
+        res=chatbot.initialize(chatId)
+    response = chatbots.parseString(chatId,msg)
+    accessToken = firebasehelper.getDict(chatId)['accessToken']
+    message.sendMessage(accessToken,chatId,orgId,response)
