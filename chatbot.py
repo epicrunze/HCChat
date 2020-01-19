@@ -131,9 +131,8 @@ def parseString(chatId, string):
                 data["process"] = "2-rectime"
                 availList = get_schedule.availability(data["accessToken"],data["defaultDoc"][1])
                 data["docAvail"] = str(availList)
-                print(data)
-                print(firebasehelper.writeDict(data, chatId))
                 outputString = ""
+                firebasehelper.writeDict(data, chatId)
                 for num, time in enumerate(availList):
                     time -= datetime.timedelta(hours=5)
                     outputString += str(num+1) + ") " + time.strftime("%c") + "\\n"
@@ -181,5 +180,5 @@ if __name__ == "__main__":
     print(parseString(chatId, "Hello"))
     print(parseString(chatId, "patient"))
     print(parseString(chatId, "book appointment with ryan"))
-    print(parseString(chatId, "yes"))
-    #print(parseString(chatId, "1"))
+    print(parseString(chatId, "yes, yes"))
+    print(parseString(chatId, "1"))
