@@ -1,12 +1,13 @@
 from datetime import date
-from firebase import firebase
+import httphelper
 
-firebase = firebase.FirebaseApplication('https://hyperbase-f0472.firebaseio.com/', None)
+URL='https://hyperbase-f0472.firebaseio.com/users/'
 
 def writeData(chatId:str)->None:
-    data={chatId:'time'}
-    res=firebase.patch('/users/',date.today())
-    print(res)
+    data='{"'+chatId+'":"'+str(date.today())+'"}'
+    header={'content-type':'application/json'}
+    return httphelper.patch(URL+'.json',header,data)
 
 def hasChatId(chatId:str)->bool:
-    return firebase.get('/users/',chatId)!=None
+    header={'content-type':'application/json'}
+    return httphelper.get(URL+chatId+'.json',header).text!='null'
