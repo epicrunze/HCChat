@@ -11,7 +11,7 @@ def parsePost(s:str,chatbots:dict, cred:tuple, orgId:int, botId:str)->None:
     if(jObject['message']['userId']==botId):
         return
     if(firebasehelper.getData(chatId)=='null'):
-        res=chatbot.initialize(chatId)
+        res=chatbot.initialize(chatId,'chatbot','chat@bot','uofthacksteam2','Lu7qXWP3b3d3',jObject['message']['userId'])
     response = chatbots.parseString(chatId,msg)
     accessToken = firebasehelper.getDict(chatId)['accessToken']
     message.sendMessage(accessToken,chatId,orgId,response)
