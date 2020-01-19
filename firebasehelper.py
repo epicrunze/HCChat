@@ -1,13 +1,18 @@
 from datetime import date
 import httphelper
 
-URL='https://hyperbase-f0472.firebaseio.com/users/'
+URL='https://hyperbase-f0472.firebaseio.com/'
 
-def writeData(data:dict)->None:
+def writeData(data:dict,ext:str='')->None:
     data=str(data)
     header={'content-type':'application/json'}
-    return httphelper.patch(URL+'.json',header,data)
+    return httphelper.patch(URL+ext+'.json',header,data)
 
-def getData(chatId:str)->str:
+def getData(chatId:str,ext:str='')->str:
     header={'content-type':'application/json'}
-    return httphelper.get(URL+chatId+'.json',header).text
+    return httphelper.get(URL+ext+chatId+'.json',header).text
+
+def postData(data, ext):
+    data = str(data).replace("'", "\"")
+    header={'content-type':'application/json'}
+    return httphelper.post(URL+ext+'.json',header,data)
